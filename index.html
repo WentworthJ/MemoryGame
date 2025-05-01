@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Game</title>
+    <style>
+        #game {
+          display: grid;
+          grid-template-columns: repeat(4, 100px);
+          gap: 10px;
+          margin: 20px auto;
+          width: max-content;
+        }
+      
+        .card {
+          width: 100px;
+          height: 100px;
+          background-color: #c439ff;
+          color: #ffffff;
+          font-size: 2em;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          cursor: pointer;
+          user-select: none;
+          border: 2px solid #333333;
+        }
+
+        .flipped {
+            background-color: #ffffff;
+            color: black;
+            cursor: default;
+        }
+
+        body {
+            background-color: #2e7eff;
+            font-family: Arial, Helvetica, sans-serif;
+            text-align: center;
+            
+            margin: 0;
+            padding: 20px;
+        }
+      </style>
+</head>
+<body>
+    <h1>Memory Game</h1>
+    <div id="game"></div>          <!-- Game board main -->
+  <div id="moves">Moves: 0</div> <!-- Moves -->
+  <div id="message"></div>       <!-- victory message -->
+
+  <script src="java.js"></script>
+    
+</body>
+</html>
