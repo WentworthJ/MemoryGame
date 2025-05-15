@@ -140,7 +140,7 @@ window.addEventListener('storage', (event) => {
     updateMovesDisplay();
   }
 });
-
+  //
 
 // clear data (for testing)
 //if (matchedPairs === symbols.length / 2) {
