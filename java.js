@@ -11,7 +11,7 @@ let symbols = [];
 
 document.addEventListener('DOMContentLoaded', () => {
   initGlobalMoves();
-  const saved = localStorage.getItem('memoryGameState');
+  const saved = sessionStorage.getItem('memoryGameState');
 
   if (saved) {
     const state = JSON.parse(saved);
@@ -57,7 +57,7 @@ function buildBoard(symbols) {
 
       if (revealedCards.length === 2) {
         moves++;
-        incrementGlobalMoves(); // <-- Update global moves
+        incrementGlobalMoves(); // global across tabs
         updateMovesDisplay();
         const [first, second] = revealedCards;
         const isMatch = first.dataset.symbol === second.dataset.symbol;
@@ -68,7 +68,7 @@ function buildBoard(symbols) {
 
           if (matchedPairs === symbols.length / 2) {
             messageDisplay.textContent = `You Win! Total Moves: ${moves}`;
-            localStorage.removeItem('memoryGameState');
+            sessionStorage.removeItem('memoryGameState');
           }
         } else {
           setTimeout(() => {
@@ -77,7 +77,7 @@ function buildBoard(symbols) {
             first.classList.remove('flipped');
             second.classList.remove('flipped');
             revealedCards = [];
-            saveGameState();
+            saveGameState(); // Save after unflip
           }, 1000);
         }
       }
@@ -107,7 +107,7 @@ function saveGameState() {
     matchedPairs
   };
 
-  localStorage.setItem('memoryGameState', JSON.stringify(state));
+  sessionStorage.setItem('memoryGameState', JSON.stringify(state)); // <-- sessionStorage used
 }
 
 function shuffle(array) {
@@ -118,7 +118,7 @@ function shuffle(array) {
   return array;
 }
 
-// GLOBAL MOVES FUNCTIONS
+// GLOBAL MOVE COUNTER (shared across tabs via localStorage)
 function initGlobalMoves() {
   if (!localStorage.getItem('globalMoves')) {
     localStorage.setItem('globalMoves', '0');
@@ -134,12 +134,12 @@ function incrementGlobalMoves() {
   localStorage.setItem('globalMoves', current);
 }
 
-// Listen for changes in other tabs
 window.addEventListener('storage', (event) => {
   if (event.key === 'globalMoves') {
-    updateMovesDisplay();
+    updateMovesDisplay(); // Sync global moves in all tabs
   }
 });
+
   //
 
 // clear data (for testing)
